@@ -9,6 +9,7 @@ const Routes = () => {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home} />
+        {/* lack of redirect in case of bad url */}
         <Route exact path="/movie/:id" component={Movie} />
         <Route exact path="/favorites" component={Favorites} />
       </Switch>

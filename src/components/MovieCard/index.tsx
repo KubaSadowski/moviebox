@@ -44,7 +44,8 @@ export default function MovieCard(movieData: MovieCardData) {
           <AiFillStar size={24} onClick={toggleFavorite} />
         ) : (
           <AiOutlineStar size={24} onClick={toggleFavorite} />
-        )}
+        )}{" "}
+        {/* why duplicate the code? */}
       </S.Favorite>
       <img
         src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}
@@ -55,6 +56,6 @@ export default function MovieCard(movieData: MovieCardData) {
           {movieData.original_title}
         </S.Link>
       </div>
-    </S.Container>
+    </S.Container> // why whole card is not a link? could be used with redirect or history by click action
   );
 }

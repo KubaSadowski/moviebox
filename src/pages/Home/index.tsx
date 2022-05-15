@@ -1,4 +1,4 @@
-import { useState } from "react"; 
+import { useState } from "react";
 
 import usePaginatedFetch from "../../hooks/usePaginatedFetch";
 
@@ -14,14 +14,16 @@ export default function Home() {
 
   const [page, setPage] = useState<number>(1);
 
-  const { data: movies, isLoading } = usePaginatedFetch(page);
+  const { data: movies, isLoading } = usePaginatedFetch(page); //could be generalized with additional url argument and type of what we want be returned
 
   return (
     <>
       <S.Header>
         <nav>
           <MovieBoxLogo />
+          {/* why not link to the homepage */}
           <S.Link to="/favorites">Favorites</S.Link>
+          {/*what about possible translations? */}
         </nav>
       </S.Header>
 
@@ -36,7 +38,7 @@ export default function Home() {
                     <Card />
                   </li>
                 );
-              })
+              }) // why not just error page?
             : movies?.map(
                 ({ id, poster_path, original_title }: MovieCardData) => {
                   return (
@@ -60,7 +62,7 @@ export default function Home() {
           </S.NavigationButton>
           <S.NavigationButton
             onClick={() => setPage((prevPage) => prevPage + 1)}
-            disabled={false}
+            disabled={false} //can't we know max amount of pages?
           >
             Next Page
           </S.NavigationButton>
