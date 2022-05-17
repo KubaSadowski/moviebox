@@ -2,6 +2,12 @@ import { useQuery } from "react-query";
 
 import api from "../services/api";
 
+type PaginatedFetchProps = {
+  page: number;
+  url: string;
+  name: string;
+};
+
 async function fetchPaginated<T>(page = 1, url: string): Promise<T> {
   const { data } = await api.get(
     `/${url}/popular?api_key=${process.env.REACT_APP_API_KEY}&page=${page}`
@@ -10,8 +16,8 @@ async function fetchPaginated<T>(page = 1, url: string): Promise<T> {
   return data.results;
 }
 
-function usePaginatedFetch<T>(page: number, url: string) {
-  return useQuery([url, page], () => fetchPaginated<T>(page, url), {
+function usePaginatedFetch<T>({ page, url, name }: PaginatedFetchProps) {
+  return useQuery([name, page], () => fetchPaginated<T>(page, url), {
     keepPreviousData: true,
   }); //signaler and error handling?
 }

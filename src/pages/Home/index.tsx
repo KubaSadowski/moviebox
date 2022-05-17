@@ -17,11 +17,11 @@ export default function Home() {
 
   const { data: movies, isLoading: moviesAreLoading } = usePaginatedFetch<
     MovieType[]
-  >(page, "movie"); //could be generalized with additional url argument and type of what we want be returned
+  >({ page, url: "movie", name: "movies" }); //could be generalized with additional url argument and type of what we want be returned
 
   const { data: tvSeries, isLoading: tvSeriesAreLoading } = usePaginatedFetch<
     TvType[]
-  >(page, "tv");
+  >({ page, url: "tv", name: "tvShows" });
 
   const isLoading = moviesAreLoading || tvSeriesAreLoading;
 
