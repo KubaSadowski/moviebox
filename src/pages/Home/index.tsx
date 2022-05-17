@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import usePaginatedFetch from "../../hooks/usePaginatedFetch";
 
@@ -27,6 +27,7 @@ export default function Home() {
 
   const movieList = movies?.map(
     ({ id, poster_path, original_title, popularity }) => {
+      console.log(original_title + " " + popularity);
       return {
         id,
         poster_path,
@@ -39,18 +40,23 @@ export default function Home() {
 
   const tvShowsList = tvSeries?.map(
     ({ id, poster_path, original_name, popularity }) => {
+      console.log(original_name + " " + popularity);
       return {
         id,
         poster_path: poster_path ? poster_path : "",
         original_title: original_name,
         popularity,
-        category: Category.movie,
+        category: Category.tvShow,
       };
     }
   );
-  const data =
-    movieList && tvShowsList ? [...movieList, ...tvShowsList] : undefined;
-  data?.sort((a, b) => (a.popularity > b.popularity ? 1 : -1));
+  const data = useMemo(() => {
+    return movieList && tvShowsList
+      ? [...movieList, ...tvShowsList].sort(
+          (a, b) => b.popularity - a.popularity
+        )
+      : undefined;
+  }, [movieList, tvShowsList]);
 
   return (
     <>

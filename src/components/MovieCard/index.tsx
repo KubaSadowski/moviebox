@@ -22,8 +22,21 @@ export type MovieCardData = {
   category: Category;
 };
 
+const getUrlEntityType = (category: Category) => {
+  switch (category) {
+    case Category.movie:
+      return "movie";
+    case Category.tvShow:
+      return "tvshow";
+    default:
+      return "";
+  }
+};
+
 export default function MovieCard(movieData: MovieCardData) {
   const { movies } = useAppSelector((state) => state.favorites);
+
+  const link = `/${getUrlEntityType(movieData.category)}/${movieData.id}`;
 
   const dispatch = useAppDispatch();
 
@@ -57,10 +70,8 @@ export default function MovieCard(movieData: MovieCardData) {
         alt={movieData.original_title}
       />
       <div>
-        <S.Link to={`/movie/${movieData.id}`}>
-          {movieData.original_title}
-        </S.Link>
-        {movieData.category}
+        <S.Link to={link}>{movieData.original_title}</S.Link>
+        <S.Category>{movieData.category}</S.Category>
       </div>
     </S.Container> // why whole card is not a link? could be used with redirect or history by click action
   );

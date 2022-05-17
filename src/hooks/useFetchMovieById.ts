@@ -1,20 +1,30 @@
 import { useQuery } from "react-query";
-
-import { MovieType } from "../common/types";
-
 import api from "../services/api";
 
-type FetchMovieById = (movieId: string) => Promise<MovieType>;
+type FetchDetailsProps = {
+  objectId: string;
+  objectType: string;
+  name: string;
+};
 
-const fetchMovie: FetchMovieById = async (movieId: string) => {
+async function fetchDetails<T>(
+  objectId: string,
+  objectType: string
+): Promise<T> {
   const response = await api.get(
-    `/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}`
+    `/${objectType}/${objectId}?api_key=${process.env.REACT_APP_API_KEY}`
   );
 
   return response.data;
-};
+}
 
-const useFetchMovieById = (movieId: string) =>
-  useQuery(["movies", movieId], () => fetchMovie(movieId));
-
-export default useFetchMovieById;
+function useFetchDetailsById<T>({
+  objectId,
+  objectType,
+  name,
+}: FetchDetailsProps) {
+  return useQuery([name, objectId], () =>
+    fetchDetails<T>(objectId, objectType)
+  );
+}
+export default useFetchDetailsById;

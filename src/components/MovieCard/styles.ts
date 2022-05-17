@@ -64,3 +64,13 @@ export const Favorite = styled.div`
     color: var(--warning);
   }
 `;
+
+export const Category = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: 1.2rem;
+  line-height: 2.4rem;
+  letter-spacing: 2%;
+  color: var(--gray-50);
+`;
