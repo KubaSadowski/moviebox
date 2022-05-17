@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/useStore";
 
-import { MovieType } from "../../common/types";
-
 import {
   addFavorite,
   removeFavorite,
@@ -12,10 +10,17 @@ import { AiOutlineStar, AiFillStar } from "react-icons/ai";
 
 import * as S from "./styles";
 
-export type MovieCardData = Omit<
-  MovieType,
-  "overview" | "vote_average" | "release_date" | "runtime" | "genres"
->;
+export enum Category {
+  tvShow = "TV Show",
+  movie = "Movie",
+}
+
+export type MovieCardData = {
+  id: number;
+  original_title: string;
+  poster_path: string;
+  category: Category;
+};
 
 export default function MovieCard(movieData: MovieCardData) {
   const { movies } = useAppSelector((state) => state.favorites);
@@ -33,7 +38,7 @@ export default function MovieCard(movieData: MovieCardData) {
       setIsFavorite((prevState) => !prevState);
     } else {
       dispatch(addFavorite(movieData));
-      setIsFavorite((prevState) => !prevState);
+      setIsFavorite((prevState) => !prevState); //duplicated
     }
   };
 
@@ -55,6 +60,7 @@ export default function MovieCard(movieData: MovieCardData) {
         <S.Link to={`/movie/${movieData.id}`}>
           {movieData.original_title}
         </S.Link>
+        {movieData.category}
       </div>
     </S.Container> // why whole card is not a link? could be used with redirect or history by click action
   );

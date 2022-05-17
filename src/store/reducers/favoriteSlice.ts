@@ -1,12 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { MovieType } from "../../common/types";
+import { Category } from "../../components/MovieCard";
 
-type Movie = Omit<
+type MovieFromMovieType = Omit<
   MovieType,
-  "overview" | "vote_average" | "release_date" | "runtime" | "genres"
->;
-
+  | "overview"
+  | "vote_average"
+  | "release_date"
+  | "runtime"
+  | "genres"
+  | "popularity"
+>; // why not use Pick?
+interface Movie extends MovieFromMovieType {
+  category: Category;
+}
 interface FavoriteState {
   movies: Movie[];
 }
